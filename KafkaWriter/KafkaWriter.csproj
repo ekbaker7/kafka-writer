@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Messages\message2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Settings\appsettings1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
