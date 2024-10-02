@@ -16,6 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Messages\message4.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Messages\message3.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Messages\message2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -23,6 +29,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Messages\message1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\appsettings3.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Settings\appsettings2.json">

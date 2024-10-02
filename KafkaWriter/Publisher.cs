@@ -26,7 +26,7 @@ namespace KafkaWriter
                 MessageMaxBytes = _config.MaxMessageBytes
             };
 
-            string key = $"Kafka-Writer-{DateTime.Now.ToString("yyyyMMddHHmmssfff")}";
+            string key = $"Kafka-Writer-Example";
 
             try
             {

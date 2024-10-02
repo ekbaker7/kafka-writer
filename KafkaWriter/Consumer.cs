@@ -37,11 +37,11 @@ namespace KafkaWriter
                 var cancelToken = new CancellationTokenSource();
                 try
                 {
-                    Console.WriteLine($"Start Consuming. Looking for key '{key}' in topic '{_config.TopicName}'.");
+                    Console.WriteLine($"Start Consuming. Looking for keys '{key}' in topic '{_config.TopicName}'.");
                     while (!cancellationToken.IsCancellationRequested)
                     {
                         var consumer = builder.Consume(cancelToken.Token);
-                        Console.WriteLine($"Message found at {DateTime.Now:hh:mm:ss.fff tt}");
+                        Console.WriteLine($"Message found at {DateTime.Now:hh:mm:ss.fff tt} with key '{consumer.Message.Key}'.");
                         try
                         {
                             if (key == consumer.Message.Key)
@@ -52,7 +52,7 @@ namespace KafkaWriter
 
                                 Console.WriteLine("Deserialized object:");
                                 Console.WriteLine(convertedObject!.ToString());
-                                break;
+                                continue;
                             }
                             else
                             {

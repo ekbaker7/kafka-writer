@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 Parser.Default.ParseArguments<Options>(args)
     .WithParsed<Options>(o =>
     {
+        bool doRead = false;
         var writer = GetHost().Services.GetService<Publisher>();
         string key = Task.Run(async () => await writer!.WriteToKafka()).Result;
         Console.WriteLine($"Finished Write. Key: '{key}'");
@@ -17,18 +18,21 @@ Parser.Default.ParseArguments<Options>(args)
         CancellationToken token = cancelToken.Token;
         token.Register(() => Console.WriteLine("Cancellation requested."));
 
-        var consumer = GetHost().Services.GetService<Consumer>();
-        Task t = Task.Run(async () => await consumer!.ReadFromKafka(key, token));
-        t.Wait();
+        if (doRead)
+        {
+            var consumer = GetHost().Services.GetService<Consumer>();
+            Task t = Task.Run(async () => await consumer!.ReadFromKafka(key, token));
+            t.Wait();
 
-        Console.WriteLine("Finished Read.");
+            Console.WriteLine("Finished Read.");
+        }
     });
 
 static IHost GetHost()
 {
     var config = new ConfigurationBuilder()
             .AddJsonFile(
-                "Settings/appsettings1.json",
+                "Settings/appsettings3.json",
                 optional: false,
                 reloadOnChange: true)
             .AddEnvironmentVariables()
