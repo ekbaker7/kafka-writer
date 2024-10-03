@@ -32,13 +32,31 @@ namespace KafkaWriter
             {
                 using var producer = new ProducerBuilder<string, string>(config).Build();
 
-                await producer.ProduceAsync(_config.TopicName, new Message<string, string>
+                if (!string.IsNullOrWhiteSpace(_messageConfig.FolderPath))
                 {
-                    Key = key,
-                    Value = File.ReadAllText(_messageConfig.FilePath)
-                });
+                    // Loop through each .json file in the folder and publish it to Kafka
+                    foreach (var file in Directory.GetFiles(_messageConfig.FolderPath, "*.json", SearchOption.TopDirectoryOnly))
+                    {
+                        Console.WriteLine($"Publishing file: {file} to {_config.TopicName}");
+                        await producer.ProduceAsync(_config.TopicName, new Message<string, string>
+                        {
+                            Key = key,
+                            Value = File.ReadAllText(file)
+                        });
 
-                producer.Flush();
+                        producer.Flush();
+                    }
+                }
+                else
+                {
+                    await producer.ProduceAsync(_config.TopicName, new Message<string, string>
+                    {
+                        Key = key,
+                        Value = File.ReadAllText(_messageConfig.FilePath)
+                    });
+
+                    producer.Flush();
+                }
             }
             catch (Exception e)
             {

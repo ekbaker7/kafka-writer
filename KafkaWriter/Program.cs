@@ -32,7 +32,7 @@ static IHost GetHost()
 {
     var config = new ConfigurationBuilder()
             .AddJsonFile(
-                "Settings/appsettings3.json",
+                "Settings/appsettings2.json",
                 optional: false,
                 reloadOnChange: true)
             .AddEnvironmentVariables()
